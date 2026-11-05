@@ -10,7 +10,6 @@ ordenacao
 # Arquivos de sistema e editores
 .DS_Store
 Thumbs.db
-.vscode/
 .idea/
 
 # Arquivos de enunciado e dataset local (>50 MB)

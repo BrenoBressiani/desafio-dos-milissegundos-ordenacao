@@ -36,12 +36,21 @@
 #include <string.h>
 #include <time.h>
 
+/* Ativa otimizacao maxima (-O3 e AVX2) automaticamente no GCC mesmo quando
+ * executado pelo botao "Play" padrao do VS Code sem flags de linha de comando */
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC optimize("O3,unroll-loops")
+#if defined(__x86_64__) || defined(__i386__)
+#pragma GCC target("avx2,bmi,bmi2")
+#endif
+#endif
+
 /* Deteccao automatica de SIMD: ARM NEON (Mac Apple Silicon) ou AVX2 (x86_64) */
 #if defined(__ARM_NEON) || defined(__aarch64__)
 #include <arm_neon.h>
 #define TEM_NEON 1
 #define TEM_AVX2 0
-#elif defined(__AVX2__) || (defined(_MSC_VER) && (defined(_M_X64) || defined(_M_AMD64)))
+#elif defined(__AVX2__) || (defined(__GNUC__) && !defined(__clang__) && defined(__x86_64__)) || (defined(_MSC_VER) && (defined(_M_X64) || defined(_M_AMD64)))
 #include <immintrin.h>
 #define TEM_NEON 0
 #define TEM_AVX2 1

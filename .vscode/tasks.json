@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Compilar e Executar (Otimizado -O3)",
+            "command": "gcc",
+            "args": [
+                "-O3",
+                "-march=native",
+                "-std=c11",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "osx": {
+                "command": "clang",
+                "args": [
+                    "-O3",
+                    "-mcpu=native",
+                    "-std=c11",
+                    "${file}",
+                    "-o",
+                    "${fileDirname}/${fileBasenameNoExtension}"
+                ]
+            },
+            "windows": {
+                "command": "gcc",
+                "args": [
+                    "-O3",
+                    "-march=native",
+                    "-std=c11",
+                    "${file}",
+                    "-o",
+                    "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                ]
+            },
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
